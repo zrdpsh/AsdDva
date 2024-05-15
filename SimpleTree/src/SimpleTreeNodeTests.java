@@ -42,4 +42,115 @@ class SimpleTreeTest {
         Assertions.assertTrue(newTree.GetAllNodes().size() == 3);
         Assertions.assertTrue(newTree.LeafCount() == 1);
     }
+
+    @Test
+    void deleteNode() {
+
+        SimpleTreeNode rootNode = new SimpleTreeNode(0, null);
+        SimpleTree newTree = new SimpleTree(rootNode);
+        SimpleTreeNode child = new SimpleTreeNode(1, null);
+        SimpleTreeNode grandchild = new SimpleTreeNode(2, null);
+        SimpleTreeNode grandgrandchild = new SimpleTreeNode(3, null);
+        newTree.AddChild(rootNode, child);
+        newTree.AddChild(child, grandchild);
+        newTree.AddChild(grandchild, grandgrandchild);
+
+        Assertions.assertTrue(newTree.GetAllNodes().size() == 4);
+        Assertions.assertTrue(newTree.LeafCount() == 1);
+        Assertions.assertTrue(newTree.Count() == 4);
+
+        newTree.DeleteNode(grandchild);
+
+        newTree.assignLevelsToNodes();
+        List<SimpleTreeNode<Integer>> getAllNodes = new ArrayList<>();
+        getAllNodes = newTree.GetAllNodes();
+        int a = getAllNodes.size();
+
+        Assertions.assertTrue(newTree.Root.nodeLevel == 1);
+        Assertions.assertTrue(newTree.Root.getValue().equals(0));
+        Assertions.assertTrue(newTree.Root.getChildren().size() == 1);
+        Assertions.assertTrue(newTree.GetAllNodes().size() == 2);
+        Assertions.assertTrue(newTree.LeafCount() == 1);
+        Assertions.assertTrue(newTree.Count() == 2);
+    }
+
+    @Test
+    void findGivenNodes() {
+
+        SimpleTreeNode rootNode = new SimpleTreeNode(0, null);
+        SimpleTree newTree = new SimpleTree(rootNode);
+        SimpleTreeNode child = new SimpleTreeNode(1, null);
+        SimpleTreeNode grandchild = new SimpleTreeNode(66, null);
+        SimpleTreeNode grandgrandchild = new SimpleTreeNode(66, null);
+        newTree.AddChild(rootNode, child);
+        newTree.AddChild(child, grandchild);
+        newTree.AddChild(grandchild, grandgrandchild);
+
+        List<SimpleTreeNode<Integer>> foundNodes = new ArrayList<>();
+        foundNodes = newTree.FindNodesByValue(66);
+        List<SimpleTreeNode<Integer>> exampleNodes = new ArrayList<>();
+        exampleNodes.add(grandchild);
+        exampleNodes.add(grandgrandchild);
+
+        newTree.assignLevelsToNodes();
+        List<SimpleTreeNode<Integer>> getAllNodes = new ArrayList<>();
+        getAllNodes = newTree.GetAllNodes();
+        int a = getAllNodes.size();
+
+
+        Assertions.assertTrue(foundNodes.equals(exampleNodes));
+        Assertions.assertTrue(newTree.GetAllNodes().size() == 4);
+        Assertions.assertTrue(newTree.LeafCount() == 1);
+        Assertions.assertTrue(newTree.Count() == 4);
+    }
+
+    @Test
+    void moveNode() {
+
+        SimpleTreeNode rootNode = new SimpleTreeNode(0, null);
+        SimpleTree newTree = new SimpleTree(rootNode);
+        SimpleTreeNode child1 = new SimpleTreeNode(10, null);
+        SimpleTreeNode child2 = new SimpleTreeNode(11, null);
+        SimpleTreeNode grandchild = new SimpleTreeNode(20, null);
+        SimpleTreeNode grandgrandchild = new SimpleTreeNode(30, null);
+        newTree.AddChild(rootNode, child1);
+        newTree.AddChild(rootNode, child2);
+        newTree.AddChild(child1, grandchild);
+        newTree.AddChild(grandchild, grandgrandchild);
+
+        Assertions.assertTrue(newTree.GetAllNodes().size() == 5);
+        Assertions.assertTrue(newTree.LeafCount() == 2);
+        Assertions.assertTrue(newTree.Count() == 5);
+
+        newTree.MoveNode(grandchild, child2);
+
+        newTree.assignLevelsToNodes();
+        List<SimpleTreeNode<Integer>> getAllNodes = new ArrayList<>();
+        getAllNodes = newTree.GetAllNodes();
+        int a = getAllNodes.size();
+
+        Assertions.assertTrue(newTree.Root.nodeLevel == 1);
+        Assertions.assertTrue(newTree.Root.getValue().equals(0));
+        Assertions.assertTrue(newTree.GetAllNodes().size() == 5);
+        Assertions.assertTrue(newTree.LeafCount() == 2);
+        Assertions.assertTrue(newTree.Count() == 5);
+        Assertions.assertTrue(grandchild.Parent.equals(child2));
+    }
+
+    @Test
+    void howManyNodesAndLeaves() {
+
+        SimpleTreeNode rootNode = new SimpleTreeNode(0, null);
+        SimpleTree newTree = new SimpleTree(rootNode);
+        SimpleTreeNode child = new SimpleTreeNode(1, null);
+        SimpleTreeNode grandchild = new SimpleTreeNode(2, null);
+        SimpleTreeNode grandgrandchild = new SimpleTreeNode(3, null);
+        newTree.AddChild(rootNode, child);
+        newTree.AddChild(child, grandchild);
+        newTree.AddChild(grandchild, grandgrandchild);
+
+        Assertions.assertTrue(newTree.GetAllNodes().size() == 4);
+        Assertions.assertTrue(newTree.LeafCount() == 1);
+        Assertions.assertTrue(newTree.Count() == 4);
+    }
 }

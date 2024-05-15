@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class SimpleTreeNode<T>
@@ -40,17 +41,23 @@ class SimpleTree<T>
         public void AddChild(SimpleTreeNode<T> ParentNode, SimpleTreeNode<T> NewChild)
         {
             if (ParentNode.Children == null) ParentNode.makeChildrenList();
+            ArrayList<SimpleTreeNode<T>> descendants = new ArrayList<>();
+            collectRecursively(NewChild, descendants);
+            int numOfDescendants = descendants.size();
             ParentNode.Children.add(NewChild);
             NewChild.Parent = ParentNode;
-            howManyNodes++;
+            howManyNodes+=numOfDescendants;
         }
 
         public void DeleteNode(SimpleTreeNode<T> NodeToDelete)
         {
             boolean notRootNode = !NodeToDelete.equals(Root);
             if (notRootNode) {
+                ArrayList<SimpleTreeNode<T>> descendants = new ArrayList<>();
+                collectRecursively(NodeToDelete, descendants);
+                int reduceIndex = descendants.size();
                 NodeToDelete.Parent.Children.remove(NodeToDelete);
-                howManyNodes-=1;
+                howManyNodes-=reduceIndex;
             }
         }
 
@@ -74,6 +81,10 @@ class SimpleTree<T>
         {
             SimpleTreeNode<T> oldParent = OriginalNode.Parent;
             oldParent.Children.remove(OriginalNode);
+            ArrayList<SimpleTreeNode<T>> descendants = new ArrayList<>();
+            collectRecursively(OriginalNode, descendants);
+            int reduceIndex = descendants.size();
+            howManyNodes -= reduceIndex;
             AddChild(NewParent, OriginalNode);
         }
 
@@ -94,6 +105,8 @@ class SimpleTree<T>
                 result.add(root);
                 return;
             }
+
+            result.add(root);
 
             for (SimpleTreeNode<T> currentNode : root.Children) {
                 collectRecursively(currentNode, result);

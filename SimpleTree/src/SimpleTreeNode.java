@@ -1,5 +1,3 @@
-import org.w3c.dom.Node;
-
 import java.util.*;
 
 public class SimpleTreeNode<T>
@@ -20,6 +18,11 @@ public class SimpleTreeNode<T>
             Children = new ArrayList<>();
         }
 
+        public List<SimpleTreeNode<T>> getChildren() {
+            if (Children == null) return new ArrayList<>();
+            return Children;
+        }
+
         public T getValue() { return NodeValue; }
 }
 	
@@ -31,6 +34,7 @@ class SimpleTree<T>
         public SimpleTree(SimpleTreeNode<T> root)
         {
             Root = root;
+            howManyNodes++;
         }
 	
         public void AddChild(SimpleTreeNode<T> ParentNode, SimpleTreeNode<T> NewChild)
@@ -86,10 +90,12 @@ class SimpleTree<T>
         }
 
         private void collectRecursively(SimpleTreeNode<T> root, ArrayList<SimpleTreeNode<T>> result) {
-            if (root.Children == null || root.Children.size() == 0) return;
+            if (root.Children == null || root.Children.size() == 0) {
+                result.add(root);
+                return;
+            }
 
             for (SimpleTreeNode<T> currentNode : root.Children) {
-                result.add(currentNode);
                 collectRecursively(currentNode, result);
             }
         }
@@ -114,15 +120,21 @@ class SimpleTree<T>
             }
         }
 
-        public void assignLevelsToNodes(SimpleTreeNode<T> root, int currentLevel) {
+        public void assignLevelsToNodes() {
+            assignLevelsRecursively(Root, 1);
+        }
+
+        private void assignLevelsRecursively(SimpleTreeNode<T> root, int currentLevel) {
             if (root.Children == null || root.Children.size() == 0) {
-              root.nodeLevel = currentLevel;
-              return;
+                root.nodeLevel = currentLevel;
+                return;
             }
 
-            for (SimpleTreeNode<T> currentNode : root.Children) {
-              currentNode.nodeLevel = currentLevel;
-              assignLevelsToNodes(currentNode, currentLevel+1);
+            root.nodeLevel = currentLevel;
+
+            for (SimpleTreeNode<T> currentNode : root.getChildren()) {
+                currentNode.nodeLevel = currentLevel;
+                assignLevelsRecursively(currentNode, currentLevel+1);
             }
         }
 }

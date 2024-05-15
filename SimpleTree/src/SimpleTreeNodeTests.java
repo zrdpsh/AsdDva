@@ -75,6 +75,55 @@ class SimpleTreeTest {
     }
 
     @Test
+    void findRoot() {
+
+        SimpleTreeNode rootNode = new SimpleTreeNode(0, null);
+        SimpleTree newTree = new SimpleTree(rootNode);
+
+        List<SimpleTreeNode<Integer>> foundNodes = new ArrayList<>();
+        foundNodes = newTree.FindNodesByValue(0);
+
+        newTree.assignLevelsToNodes();
+        List<SimpleTreeNode<Integer>> getAllNodes = new ArrayList<>();
+        getAllNodes = newTree.GetAllNodes();
+        int a = getAllNodes.size();
+
+
+        Assertions.assertTrue(foundNodes.getFirst().getValue() == 0);
+        Assertions.assertTrue(newTree.GetAllNodes().size() == 1);
+        Assertions.assertTrue(newTree.LeafCount() == 1);
+        Assertions.assertTrue(newTree.Count() == 1);
+    }
+
+    @Test
+    void findGivenNode() {
+
+        SimpleTreeNode rootNode = new SimpleTreeNode(0, null);
+        SimpleTree newTree = new SimpleTree(rootNode);
+        SimpleTreeNode child = new SimpleTreeNode(1, null);
+        SimpleTreeNode grandchild = new SimpleTreeNode(66, null);
+        newTree.AddChild(rootNode, child);
+        newTree.AddChild(child, grandchild);
+
+        List<SimpleTreeNode<Integer>> foundNodes = new ArrayList<>();
+        foundNodes = newTree.FindNodesByValue(66);
+        List<SimpleTreeNode<Integer>> exampleNodes = new ArrayList<>();
+        exampleNodes.add(grandchild);
+
+        newTree.assignLevelsToNodes();
+        List<SimpleTreeNode<Integer>> getAllNodes = new ArrayList<>();
+        getAllNodes = newTree.GetAllNodes();
+        int a = getAllNodes.size();
+
+
+        Assertions.assertTrue(foundNodes.getFirst().getValue() == 66);
+        Assertions.assertTrue(foundNodes.equals(exampleNodes));
+        Assertions.assertTrue(newTree.GetAllNodes().size() == 3);
+        Assertions.assertTrue(newTree.LeafCount() == 1);
+        Assertions.assertTrue(newTree.Count() == 3);
+    }
+
+    @Test
     void findGivenNodes() {
 
         SimpleTreeNode rootNode = new SimpleTreeNode(0, null);

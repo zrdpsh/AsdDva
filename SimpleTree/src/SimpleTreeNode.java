@@ -41,7 +41,7 @@ class SimpleTree<T>
         public void AddChild(SimpleTreeNode<T> ParentNode, SimpleTreeNode<T> NewChild)
         {
             if (ParentNode.Children == null) ParentNode.makeChildrenList();
-            ArrayList<SimpleTreeNode<T>> descendants = new ArrayList<>();
+            LinkedList<SimpleTreeNode<T>> descendants = new LinkedList<>();
             collectRecursively(NewChild, descendants);
             int numOfDescendants = descendants.size();
             ParentNode.Children.add(NewChild);
@@ -53,7 +53,7 @@ class SimpleTree<T>
         {
             boolean notRootNode = !NodeToDelete.equals(Root);
             if (notRootNode) {
-                ArrayList<SimpleTreeNode<T>> descendants = new ArrayList<>();
+                LinkedList<SimpleTreeNode<T>> descendants = new LinkedList<>();
                 collectRecursively(NodeToDelete, descendants);
                 int reduceIndex = descendants.size();
                 NodeToDelete.Parent.Children.remove(NodeToDelete);
@@ -63,7 +63,7 @@ class SimpleTree<T>
 
        public List<SimpleTreeNode<T>> GetAllNodes()
         {
-            ArrayList<SimpleTreeNode<T>> result = new ArrayList<>();
+            LinkedList<SimpleTreeNode<T>> result = new LinkedList<>();
             collectRecursively(Root, result);
 
             return result;
@@ -81,10 +81,12 @@ class SimpleTree<T>
         {
             SimpleTreeNode<T> oldParent = OriginalNode.Parent;
             oldParent.Children.remove(OriginalNode);
-            ArrayList<SimpleTreeNode<T>> descendants = new ArrayList<>();
+
+            LinkedList<SimpleTreeNode<T>> descendants = new LinkedList<>();
             collectRecursively(OriginalNode, descendants);
             int reduceIndex = descendants.size();
             howManyNodes -= reduceIndex;
+
             AddChild(NewParent, OriginalNode);
         }
 
@@ -100,7 +102,7 @@ class SimpleTree<T>
             return result.size();
         }
 
-        private void collectRecursively(SimpleTreeNode<T> root, ArrayList<SimpleTreeNode<T>> result) {
+        private void collectRecursively(SimpleTreeNode<T> root, LinkedList<SimpleTreeNode<T>> result) {
             if (root.Children == null || root.Children.size() == 0) {
                 result.add(root);
                 return;
@@ -114,10 +116,18 @@ class SimpleTree<T>
         }
 
         private void filterRecursively(SimpleTreeNode<T> root, ArrayList<SimpleTreeNode<T>> result, T valueToCompareTo) {
-            if (root.Children == null || root.Children.size() == 0) return;
+            if ((root.Children == null || root.Children.size() == 0) && root.getValue().equals(valueToCompareTo)) {
+                result.add(root);
+                return;
+            }
+
+            if (root.Children == null || root.Children.size() == 0) {
+                return;
+            }
+
+            if (root.getValue().equals(valueToCompareTo)) result.add(root);
 
             for (SimpleTreeNode<T> currentNode : root.Children) {
-              if (currentNode.getValue().equals(valueToCompareTo)) result.add(currentNode);
               filterRecursively(currentNode, result, valueToCompareTo);
             }
         }

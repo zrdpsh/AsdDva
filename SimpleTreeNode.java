@@ -2,9 +2,9 @@ import java.util.*;
 
 public class SimpleTreeNode<T>
 {
-        public T NodeValue; // значение в узле
-        public SimpleTreeNode<T> Parent; // родитель или null для корня
-        public List<SimpleTreeNode<T>> Children; // список дочерних узлов или null
+        public T NodeValue;
+        public SimpleTreeNode<T> Parent;
+        public List<SimpleTreeNode<T>> Children;
 
         public SimpleTreeNode(T val, SimpleTreeNode<T> parent)
         {
@@ -30,7 +30,6 @@ class SimpleTree<T>
 	
         public void AddChild(SimpleTreeNode<T> ParentNode, SimpleTreeNode<T> NewChild)
         {
-          // ваш код добавления нового дочернего узла существующему ParentNode
             if (ParentNode.Children == null) ParentNode.makeChildrenList();
             ParentNode.Children.add(NewChild);
             NewChild.Parent = ParentNode;
@@ -39,7 +38,6 @@ class SimpleTree<T>
 
         public void DeleteNode(SimpleTreeNode<T> NodeToDelete)
         {
-          // ваш код удаления существующего узла NodeToDelete
             boolean notRootNode = NodeToDelete.equals(Root);
             if (notRootNode) {
                 NodeToDelete.Parent.Children.remove(NodeToDelete);
@@ -77,3 +75,13 @@ class SimpleTree<T>
           return 0;
         }
 }
+
+
+
+
+
+
+
+
+
+

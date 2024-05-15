@@ -1,3 +1,5 @@
+import org.w3c.dom.Node;
+
 import java.util.*;
 
 public class SimpleTreeNode<T>
@@ -5,17 +7,20 @@ public class SimpleTreeNode<T>
         public T NodeValue;
         public SimpleTreeNode<T> Parent;
         public List<SimpleTreeNode<T>> Children;
+        public int nodeLevel = 0;
 
         public SimpleTreeNode(T val, SimpleTreeNode<T> parent)
         {
-          NodeValue = val;
-          Parent = parent;
-          Children = null;
+            NodeValue = val;
+            Parent = parent;
+            Children = null;
         }
 
         public void makeChildrenList() {
             Children = new ArrayList<>();
         }
+
+        public T getValue() { return NodeValue; }
 }
 	
 class SimpleTree<T>
@@ -25,7 +30,7 @@ class SimpleTree<T>
 
         public SimpleTree(SimpleTreeNode<T> root)
         {
-          Root = root;
+            Root = root;
         }
 	
         public void AddChild(SimpleTreeNode<T> ParentNode, SimpleTreeNode<T> NewChild)
@@ -38,7 +43,7 @@ class SimpleTree<T>
 
         public void DeleteNode(SimpleTreeNode<T> NodeToDelete)
         {
-            boolean notRootNode = NodeToDelete.equals(Root);
+            boolean notRootNode = !NodeToDelete.equals(Root);
             if (notRootNode) {
                 NodeToDelete.Parent.Children.remove(NodeToDelete);
                 howManyNodes-=1;
@@ -47,14 +52,18 @@ class SimpleTree<T>
 
        public List<SimpleTreeNode<T>> GetAllNodes()
         {
-          // ваш код выдачи всех узлов дерева в определённом порядке
-          return null;
+            ArrayList<SimpleTreeNode<T>> result = new ArrayList<>();
+            collectRecursively(Root, result);
+
+            return result;
         }
 	
        public List<SimpleTreeNode<T>> FindNodesByValue(T val)
        {
-          // ваш код поиска узлов по значению
-          return null;
+            ArrayList<SimpleTreeNode<T>> result = new ArrayList<>();
+            filterRecursively(Root, result, val);
+
+            return result;
        }
 
         public void MoveNode(SimpleTreeNode<T> OriginalNode, SimpleTreeNode<T> NewParent)
@@ -71,8 +80,50 @@ class SimpleTree<T>
 
         public int LeafCount()
         {
-          // количество листьев в дереве
-          return 0;
+            ArrayList<SimpleTreeNode<T>> result = new ArrayList<>();
+            countLeavesRecursively(Root, result);
+            return result.size();
+        }
+
+        private void collectRecursively(SimpleTreeNode<T> root, ArrayList<SimpleTreeNode<T>> result) {
+            if (root.Children == null || root.Children.size() == 0) return;
+
+            for (SimpleTreeNode<T> currentNode : root.Children) {
+                result.add(currentNode);
+                collectRecursively(currentNode, result);
+            }
+        }
+
+        private void filterRecursively(SimpleTreeNode<T> root, ArrayList<SimpleTreeNode<T>> result, T valueToCompareTo) {
+            if (root.Children == null || root.Children.size() == 0) return;
+
+            for (SimpleTreeNode<T> currentNode : root.Children) {
+              if (currentNode.getValue().equals(valueToCompareTo)) result.add(currentNode);
+              filterRecursively(currentNode, result, valueToCompareTo);
+            }
+        }
+
+        private void countLeavesRecursively(SimpleTreeNode<T> root, ArrayList<SimpleTreeNode<T>> result) {
+            if (root.Children == null || root.Children.size() == 0) {
+              result.add(root);
+              return;
+            }
+
+            for (SimpleTreeNode<T> currentNode : root.Children) {
+              countLeavesRecursively(currentNode, result);
+            }
+        }
+
+        public void assignLevelsToNodes(SimpleTreeNode<T> root, int currentLevel) {
+            if (root.Children == null || root.Children.size() == 0) {
+              root.nodeLevel = currentLevel;
+              return;
+            }
+
+            for (SimpleTreeNode<T> currentNode : root.Children) {
+              currentNode.nodeLevel = currentLevel;
+              assignLevelsToNodes(currentNode, currentLevel+1);
+            }
         }
 }
 

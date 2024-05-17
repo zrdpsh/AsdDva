@@ -55,6 +55,7 @@ class SimpleTree<T>
             if (notRootNode) {
                 LinkedList<SimpleTreeNode<T>> descendants = new LinkedList<>();
                 collectRecursively(NodeToDelete, descendants);
+		    
                 int reduceIndex = descendants.size();
                 NodeToDelete.Parent.Children.remove(NodeToDelete);
                 howManyNodes-=reduceIndex;

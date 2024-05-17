@@ -43,6 +43,7 @@ class SimpleTree<T>
             if (ParentNode.Children == null) ParentNode.makeChildrenList();
             LinkedList<SimpleTreeNode<T>> descendants = new LinkedList<>();
             collectRecursively(NewChild, descendants);
+		
             int numOfDescendants = descendants.size();
             ParentNode.Children.add(NewChild);
             NewChild.Parent = ParentNode;

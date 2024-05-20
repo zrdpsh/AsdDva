@@ -4,11 +4,11 @@ import java.util.*;
 
 class BSTNode<T>
 {
-    public int NodeKey; // ключ узла
-    public T NodeValue; // значение в узле
-    public BSTNode<T> Parent; // родитель или null для корня
-    public BSTNode<T> LeftChild; // левый потомок
-    public BSTNode<T> RightChild; // правый потомок	
+    public int NodeKey;
+    public T NodeValue;
+    public BSTNode<T> Parent;
+    public BSTNode<T> LeftChild;
+    public BSTNode<T> RightChild;
 
     public BSTNode(int key, T val, BSTNode<T> parent)
     {
@@ -30,16 +30,12 @@ class BSTNode<T>
 
 
 
-// промежуточный результат поиска
 class BSTFind<T>
 {
-    // null если в дереве вообще нету узлов
     public BSTNode<T> Node;
 
-    // true если узел найден
     public boolean NodeHasKey;
 
-    // true, если родительскому узлу надо добавить новый левым
     public boolean ToLeft;
 
     public BSTFind() { Node = null; }
@@ -57,7 +53,7 @@ class BSTFind<T>
 
 class BST<T>
 {
-    BSTNode<T> Root; // корень дерева, или null
+    BSTNode<T> Root;
     private int size = 0;
 
     public BST(BSTNode<T> node)
@@ -73,7 +69,6 @@ class BST<T>
 
     public BSTFind<T> FindNodeByKey(int key)
     {
-        // ищем в дереве узел и сопутствующую информацию по ключу
         if (Root == null) {
             return new BSTFind(null, false, false);
         }
@@ -261,7 +256,7 @@ class BST<T>
 
     public int Count()
     {
-        return countNodes(Root); // количество узлов в дереве
+        return countNodes(Root);
     }
 
     private int countNodes(BSTNode<T> node) {
@@ -270,3 +265,14 @@ class BST<T>
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+

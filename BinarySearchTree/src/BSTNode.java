@@ -167,10 +167,13 @@ class BST<T>
         if (!findResult.NodeHasKey) {
             return false;
         }
+        return deleteNode(findResult);
+    }
 
+    public boolean deleteNode(BSTFind<T> findResult) {
         BSTNode<T> nodeToDelete = findResult.Node;
 
-        if (isLeaf(Root) && Root.getLeftChild() == null && Root.getRightChild() == null) {
+        if (nodeToDelete.equals(Root) && Root.getLeftChild() == null && Root.getRightChild() == null) {
             Root = null;
             return true;
         }
@@ -225,6 +228,8 @@ class BST<T>
     public boolean isLeaf(BSTNode<T> node) {
         return node.LeftChild == null && node.RightChild == null;
     }
+
+    pu
 
     public void setChildren(BSTNode<T> newParent, BSTNode<T> leftChild, BSTNode<T> rightChild) {
         boolean isNotRecursiveParentRightChild = !newParent.equals(rightChild);

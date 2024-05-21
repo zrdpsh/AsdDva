@@ -135,4 +135,29 @@ public class BSTNodeTests {
         Assertions.assertTrue(minMaxSubTree.FinMinMax(subTreeRoot, true).getKey() == 13);
     }
 
+    @Test
+    void DeleteNode() {
+        BST<Integer> deleteTree = new BST<>(null);
+
+        deleteTree.AddKeyValue(21, 71);
+        deleteTree.AddKeyValue(10, 71);
+        deleteTree.AddKeyValue(13, 71);
+        deleteTree.AddKeyValue(7, 71);
+        deleteTree.AddKeyValue(5, 71);
+        deleteTree.AddKeyValue(9, 71);
+        deleteTree.AddKeyValue(30, 71);
+        deleteTree.AddKeyValue(25, 71);
+        deleteTree.AddKeyValue(37, 71);
+
+        Assertions.assertTrue(deleteTree.FindNodeByKey(7).NodeHasKey);
+
+        deleteTree.DeleteNodeByKey(7);
+
+        Assertions.assertFalse(deleteTree.FindNodeByKey(7).NodeHasKey);
+        BSTNode<Integer> replacedNode = deleteTree.FindNodeByKey(10).Node.getLeftChild();
+        Assertions.assertTrue(replacedNode.getKey() == 9);
+        Assertions.assertTrue(replacedNode.getLeftChild().getKey() == 5);
+        Assertions.assertTrue(replacedNode.getRightChild() == null);
+    }
+
 }

@@ -173,7 +173,7 @@ class BST<T>
     public boolean deleteNode(BSTFind<T> findResult) {
         BSTNode<T> nodeToDelete = findResult.Node;
 
-        if (nodeToDelete.equals(Root) && Root.getLeftChild() == null && Root.getRightChild() == null) {
+        if (nodeToDelete.equals(Root) && isLeaf(Root)) {
             Root = null;
             return true;
         }
@@ -229,7 +229,6 @@ class BST<T>
         return node.LeftChild == null && node.RightChild == null;
     }
 
-    pu
 
     public void setChildren(BSTNode<T> newParent, BSTNode<T> leftChild, BSTNode<T> rightChild) {
         boolean isNotRecursiveParentRightChild = !newParent.equals(rightChild);

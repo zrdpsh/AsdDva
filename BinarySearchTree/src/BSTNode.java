@@ -21,8 +21,12 @@ class BSTNode<T>
 
     public int getKey() {return this.NodeKey;}
     public T getNodeValue() { return NodeValue;}
+    public BSTNode<T> getParent() {return Parent;}
     public BSTNode<T> getRightChild() {return RightChild;}
     public BSTNode<T> getLeftChild() {return LeftChild;}
+
+    public boolean hasLeftChild() {return LeftChild != null;}
+    public boolean hasRightChild() {return RightChild != null;}
 }
 
 
@@ -32,15 +36,15 @@ class BSTNode<T>
 
 class BSTFind<T>
 {
-    public BSTNode<T> Node;
+    public BSTNode<T> Node; // parentNode to add it
 
     public boolean NodeHasKey;
 
     public boolean ToLeft;
 
     public BSTFind() { Node = null; }
-    public BSTFind(BSTNode<T> givenNode, boolean nodeHasKey, boolean addToLeft) {
-        this.Node = givenNode;
+    public BSTFind(BSTNode<T> parentNode, boolean nodeHasKey, boolean addToLeft) {
+        this.Node = parentNode;
         this.NodeHasKey = nodeHasKey;
         this.ToLeft = addToLeft;
     }
@@ -63,6 +67,8 @@ class BST<T>
             size = 1;
         }
     }
+
+    public BSTNode<T> getRoot() {return Root;}
 
 
 
@@ -91,7 +97,7 @@ class BST<T>
         }
 
 
-        if (key > currentRoot.getKey() && currentRoot.getLeftChild() != null) {
+        if (key > currentRoot.getKey() && currentRoot.getRightChild() != null) {
             return FindFromGivenNode(currentRoot.getRightChild(), key);
         }
 
@@ -104,21 +110,24 @@ class BST<T>
 
     public boolean AddKeyValue(int key, T val)
     {
-        BSTFind<T> searchResult= FindNodeByKey(key);
+        BSTFind<T> searchResult = FindNodeByKey(key);
 
         BSTNode<T> targetNodeInTree = searchResult.Node;
         if (targetNodeInTree == null) {
             Root = new BSTNode<>(key, val, null);
+            return true;
         }
+
+        // каким долджно быть значение у вновь создаваемого дерева
 
         if (searchResult.NodeHasKey) return false;
 
-        addNewNode(searchResult, key, val);
+        addNewChild(searchResult, key, val);
         size+=1;
         return true;
     }
 
-    private void addNewNode(BSTFind<T>  searchResult, int key, T val) {
+    private void addNewChild(BSTFind<T>  searchResult, int key, T val) {
         if (searchResult.ToLeft) {
             searchResult.Node.LeftChild = new BSTNode(key, val, searchResult.Node);
             return;
@@ -159,32 +168,35 @@ class BST<T>
             return false;
         }
 
-        BSTNode toDelete = findResult.Node;
+        BSTNode<T> nodeToDelete = findResult.Node;
 
-
-        if (isLeaf(toDelete)) {
-            boolean isRoot = toDelete.equals(Root);
-            if (isRoot) {
-                Root = null;
-                return true;
-            }
-
-            deleteLeaf(toDelete);
+        if (isLeaf(Root) && Root.getLeftChild() == null && Root.getRightChild() == null) {
+            Root = null;
             return true;
         }
 
-        if (toDelete.LeftChild != null && toDelete.RightChild == null) {
-            replaceNode(toDelete, toDelete.LeftChild);
+        if (isLeaf(nodeToDelete)) {
+            deleteLeaf(nodeToDelete);
             return true;
         }
 
-        if (toDelete.LeftChild == null && toDelete.RightChild != null) {
-            replaceNode(toDelete, toDelete.RightChild);
+        boolean haveOnlyOneChild = nodeToDelete.hasLeftChild() ^ nodeToDelete.hasRightChild();
+
+
+        if (haveOnlyOneChild) {
+            BSTNode<T> replacingNode = null;
+            replacingNode = (nodeToDelete.hasLeftChild()) ? nodeToDelete.getLeftChild() :  nodeToDelete.getRightChild();
+            replaceNode(nodeToDelete, replacingNode);
+            return true;
+        }
+
+        if (nodeToDelete.LeftChild == null && nodeToDelete.RightChild != null) {
+            replaceNode(nodeToDelete, nodeToDelete.RightChild);
             return true;
         }
 
 
-        deleteNodeWithBothChildren(toDelete);
+        deleteNodeWithBothChildren(nodeToDelete);
         return true;
     }
 

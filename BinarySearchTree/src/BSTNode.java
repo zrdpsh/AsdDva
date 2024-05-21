@@ -118,7 +118,7 @@ class BST<T>
             return true;
         }
 
-        // каким долджно быть значение у вновь создаваемого дерева
+
 
         if (searchResult.NodeHasKey) return false;
 

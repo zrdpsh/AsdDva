@@ -204,8 +204,9 @@ class BST<T>
         BSTNode<T> minChild = FindMin(toDelete.RightChild);
 
 
-        BSTNode<T> rightChild = toDelete.RightChild; // remove minChild from old place
+        BSTNode<T> rightChild = toDelete.RightChild;
         BSTNode<T> leftChild = toDelete.LeftChild;
+        
         if (isLeaf(minChild)) {
             deleteLeaf(minChild);
         } else {

@@ -193,12 +193,6 @@ class BST<T>
             return true;
         }
 
-        if (nodeToDelete.LeftChild == null && nodeToDelete.RightChild != null) {
-            replaceNode(nodeToDelete, nodeToDelete.RightChild);
-            return true;
-        }
-
-
         deleteNodeWithBothChildren(nodeToDelete);
         return true;
     }
@@ -279,6 +273,59 @@ class BST<T>
     private int countNodes(BSTNode<T> node) {
         if (node == null) return 0;
         return 1 + countNodes(node.getLeftChild()) + countNodes(node.getRightChild());
+    }
+
+    public ArrayList<BSTNode> WideAllNodes() {
+        Queue<BSTNode> q = new LinkedList<BSTNode>();
+        ArrayList<BSTNode> result = new ArrayList<>();
+        q.add(getRoot());
+
+        while (!q.isEmpty()) {
+            BSTNode currentNode = q.poll();
+            result.add(currentNode);
+
+            if (currentNode.getLeftChild() != null) q.add(currentNode.getLeftChild());
+            if (currentNode.getRightChild() != null) q.add(currentNode.getRightChild());
+        }
+
+        return result;
+    }
+
+
+    public ArrayList<BSTNode> DeepAllNodes(int searchType) {
+        ArrayList<BSTNode> result = new ArrayList<>();
+
+        if (searchType == 0) preorder(result, getRoot());
+        if (searchType == 1) inorder(result, getRoot());
+        if (searchType == 2) postorder(result, getRoot());
+
+        return result;
+    }
+
+    private void preorder(ArrayList<BSTNode> accumulator, BSTNode currentNode) {
+        if (currentNode == null) return;
+
+        accumulator.add(currentNode);
+
+        preorder(accumulator, currentNode.getLeftChild());
+        preorder(accumulator, currentNode.getRightChild());
+    }
+
+    private void inorder(ArrayList<BSTNode> accumulator, BSTNode currentNode) {
+        if (currentNode == null) return;
+
+        inorder(accumulator, currentNode.getLeftChild());
+        accumulator.add(currentNode);
+        inorder(accumulator, currentNode.getRightChild());
+    }
+
+    private void postorder(ArrayList<BSTNode> accumulator, BSTNode currentNode) {
+        if (currentNode == null) return;
+
+        postorder(accumulator, currentNode.getLeftChild());
+        postorder(accumulator, currentNode.getRightChild());
+        accumulator.add(currentNode);
+
     }
 
 }

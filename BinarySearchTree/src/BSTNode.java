@@ -296,9 +296,9 @@ class BST<T>
     public ArrayList<BSTNode> DeepAllNodes(int searchType) {
         ArrayList<BSTNode> result = new ArrayList<>();
 
-        if (searchType == 0) preorder(result, getRoot());
-        if (searchType == 1) inorder(result, getRoot());
-        if (searchType == 2) postorder(result, getRoot());
+        if (searchType == 0) inorder(result, getRoot());
+        if (searchType == 1) postorder(result, getRoot());
+        if (searchType == 2) preorder(result, getRoot());
 
         return result;
     }

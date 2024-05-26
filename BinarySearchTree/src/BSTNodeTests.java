@@ -14,6 +14,7 @@ public class BSTNodeTests {
 
     }
 
+    
     @Test
     void findNothingAndAddToLeft() {
         BST<Integer> emptyTree = new BST<Integer>(null);

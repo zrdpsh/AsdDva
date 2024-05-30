@@ -14,8 +14,7 @@ class aBST
 
 
 
-
-    public Integer FindKeyIndex(int key)
+   public Integer FindKeyIndex(int key)
     {
         if (Tree[0] == null) return 0;
 
@@ -88,7 +87,14 @@ class aBST
         }
         return -1;
     }
-
-
-
 }
+
+
+
+
+
+
+
+
+
+

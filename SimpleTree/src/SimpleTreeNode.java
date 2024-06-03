@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.*;
 
+
 public class SimpleTreeNode<T>
 {
         public T NodeValue;

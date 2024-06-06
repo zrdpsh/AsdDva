@@ -31,8 +31,8 @@ public class AlgorithmsDataStructures2Tests {
 
     @Test
     public void generateBBSTArray_Not_Sorted(){
-        int[] testArray = new int[]{7,5,6};
-        int[] expected = new int[]{6,5,7};
+        int[] testArray = new int[]{7,5,6,4};
+        int[] expected = new int[]{6,5,7,4};
         int[] result = AlgorithmsDataStructures2.GenerateBBSTArray(testArray);
         assertArrayEquals(expected, result);
     }

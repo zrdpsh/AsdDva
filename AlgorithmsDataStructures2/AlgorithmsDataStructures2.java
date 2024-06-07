@@ -13,6 +13,7 @@ public class AlgorithmsDataStructures2
         return fillBSTSubtree(emptyArrayForBST, 0, sortedArray, 0, sortedArray.length-1);
     }
 
+    
     private static int[] fillBSTSubtree(int[] emptyArrayForBST, int currentIndexToFill, int[] sortedArray, int sortedSubarrayStart, int sortedSubarrayEnd) {
         int middleIndex = calculateMiddleIndex(sortedSubarrayStart, sortedSubarrayEnd);
         emptyArrayForBST[currentIndexToFill] = sortedArray[middleIndex];

@@ -73,6 +73,7 @@ class BalancedBST
         boolean isBalancedRightChild = IsBalanced( root_node.RightChild);
         return isBalancedNode && isBalancedLeftChild && isBalancedRightChild;
     }
+    
 
     public int getMaxDepth(BSTNode rootOfSubtree, int parentLevel){
         if(rootOfSubtree == null){
@@ -82,6 +83,7 @@ class BalancedBST
         int maxDepthRightBranch = getMaxDepth(rootOfSubtree.RightChild, rootOfSubtree.Level);
         return Math.max(maxDepthRightBranch, maxDepthLeftBranch);
     }
+    
 
     public static int calculateMiddleIndex(int start, int end) {
         int delta = (end - start) / 2;

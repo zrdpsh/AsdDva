@@ -68,10 +68,11 @@ class BalancedBST
         }
         int maxDepthLeftBranch = getMaxDepth(root_node.LeftChild, root_node.Level);
         int maxDepthRightBranch = getMaxDepth(root_node.RightChild, root_node.Level);
-        boolean isBalancedNode =Math.abs (maxDepthRightBranch - maxDepthLeftBranch)<= 1;
-        boolean isBalancedLeftChild = IsBalanced( root_node.LeftChild);
-        boolean isBalancedRightChild = IsBalanced( root_node.RightChild);
-        return isBalancedNode && isBalancedLeftChild && isBalancedRightChild;
+        boolean currentIsBalanced = Math.abs(maxDepthRightBranch - maxDepthLeftBranch) <= 1;
+        
+        boolean isBalancedLeftChild = IsBalanced(root_node.LeftChild);
+        boolean isBalancedRightChild = IsBalanced(root_node.RightChild);
+        return currentIsBalanced && isBalancedLeftChild && isBalancedRightChild;
     }
     
 

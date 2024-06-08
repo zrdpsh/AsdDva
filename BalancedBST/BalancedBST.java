@@ -6,7 +6,7 @@ class BSTNode
     public BSTNode Parent; 
     public BSTNode LeftChild; 
     public BSTNode RightChild; 	
-    public int     Level; 
+    public int Level; 
 
     public BSTNode(int key, BSTNode parent)
     {

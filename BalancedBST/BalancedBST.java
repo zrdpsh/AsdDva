@@ -39,6 +39,7 @@ class BalancedBST
         recurOverArray(sortedArray, 0, arraySize - 1, null, 0);
 
     }
+    
 
     public BSTNode recurOverArray(int[] sortedArray, int sortedSubarrayStart, int sortedSubarrayEnd, BSTNode parent, int nodeLevel) {
         int middleIndex = calculateMiddleIndex(sortedSubarrayStart, sortedSubarrayEnd);
@@ -60,6 +61,7 @@ class BalancedBST
 
         return currentNode;
     }
+
     
 
     public boolean IsBalanced(BSTNode root_node) {
@@ -84,6 +86,7 @@ class BalancedBST
         int maxDepthRightBranch = getMaxDepth(rootOfSubtree.RightChild, rootOfSubtree.Level);
         return Math.max(maxDepthRightBranch, maxDepthLeftBranch);
     }
+    
     
 
     public static int calculateMiddleIndex(int start, int end) {

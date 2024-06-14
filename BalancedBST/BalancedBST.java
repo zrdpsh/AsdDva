@@ -40,6 +40,7 @@ class BalancedBST
 
     }
     
+    
 
     public BSTNode recurOverArray(int[] sortedArray, int sortedSubarrayStart, int sortedSubarrayEnd, BSTNode parent, int nodeLevel) {
         int middleIndex = calculateMiddleIndex(sortedSubarrayStart, sortedSubarrayEnd);

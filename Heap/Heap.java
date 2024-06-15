@@ -43,7 +43,6 @@ class Heap
         int indexToFreeUp = getMinimumIndex();
         if (indexToFreeUp == 0) {
             removeKey(indexToFreeUp);
-            freeSlot -= 1;
             return maxValue;
         }
 

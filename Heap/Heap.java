@@ -80,6 +80,7 @@ class Heap
         if (freeSlot > (HeapArray.length-1)) return false;
 
         HeapArray[freeSlot] = key;
+
         if (freeSlot == 0) {
             freeSlot+=1;
             return true;
@@ -94,6 +95,7 @@ class Heap
             int temp = parentValue;
             HeapArray[parentIndex] = childValue;
             HeapArray[childIndex] = temp;
+            childIndex = parentIndex;
             parentIndex = (parentIndex-1)/MAX_CHILDREN;
             parentValue = HeapArray[parentIndex];
         }

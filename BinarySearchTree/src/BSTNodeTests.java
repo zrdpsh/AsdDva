@@ -32,7 +32,7 @@ public class BSTNodeTests {
 
         emptyTree.AddKeyValue(21, 71);
 
-        BSTFind<Integer> greaterNode = emptyTree.FindNodeByKey(30);
+        BSTFind<Integer> greaterNode = emptyTree.FindNodeByKey(31);
 
         Assertions.assertFalse(greaterNode.ToLeft);
     }

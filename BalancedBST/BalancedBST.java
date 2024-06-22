@@ -77,6 +77,7 @@ class BalancedBST
         boolean isBalancedRightChild = IsBalanced(root_node.RightChild);
         return currentIsBalanced && isBalancedLeftChild && isBalancedRightChild;
     }
+
     
 
     public int getMaxDepth(BSTNode rootOfSubtree, int parentLevel){

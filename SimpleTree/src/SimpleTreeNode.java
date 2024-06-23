@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.*;
 
+
 public class SimpleTreeNode<T>
 {
         public T NodeValue;
@@ -26,7 +27,8 @@ public class SimpleTreeNode<T>
 
         public T getValue() { return NodeValue; }
 }
-	
+
+
 class SimpleTree<T>
   {
         public SimpleTreeNode<T> Root; // корень, может быть null

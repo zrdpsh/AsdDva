@@ -31,7 +31,7 @@ public class SimpleTreeNode<T>
 
 class SimpleTree<T>
   {
-        public SimpleTreeNode<T> Root; // корень, может быть null
+        public SimpleTreeNode<T> Root; 
         private int howManyNodes = 0;
 
         public SimpleTree(SimpleTreeNode<T> root)

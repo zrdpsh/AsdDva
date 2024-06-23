@@ -161,4 +161,88 @@ public class BSTNodeTests {
         Assertions.assertTrue(replacedNode.getRightChild() == null);
     }
 
+    @Test
+    void WideAllNodesBasic() {
+        BST<Integer> wideAllNodesTree = new BST<>(null);
+
+        wideAllNodesTree.AddKeyValue(1, 71);
+        wideAllNodesTree.AddKeyValue(2, 71);
+        wideAllNodesTree.AddKeyValue(3, 71);
+        wideAllNodesTree.AddKeyValue(4, 71);
+        wideAllNodesTree.AddKeyValue(5, 71);
+        wideAllNodesTree.AddKeyValue(6, 71);
+        wideAllNodesTree.AddKeyValue(7, 71);
+
+        int[] testSeries = {1, 2, 3, 4, 5, 6, 7};
+
+        ArrayList<BSTNode> result = wideAllNodesTree.WideAllNodes();
+
+        for (int i = 0; i < testSeries.length; i++) {
+            Assertions.assertTrue(testSeries[i] == result.get(i).getKey());
+        }
+    }
+
+    @Test
+    void PreOrderBasic() {
+        BST<Integer> wideAllNodesTree = new BST<>(null);
+
+        wideAllNodesTree.AddKeyValue(1, 71);
+        wideAllNodesTree.AddKeyValue(2, 71);
+        wideAllNodesTree.AddKeyValue(3, 71);
+        wideAllNodesTree.AddKeyValue(4, 71);
+        wideAllNodesTree.AddKeyValue(5, 71);
+        wideAllNodesTree.AddKeyValue(6, 71);
+        wideAllNodesTree.AddKeyValue(7, 71);
+
+        int[] testSeries = {1, 2, 4, 5, 3, 6, 7};
+
+        ArrayList<BSTNode> result = wideAllNodesTree.DeepAllNodes(0);
+
+        for (int i = 0; i < testSeries.length; i++) {
+            Assertions.assertTrue(testSeries[i] == result.get(i).getKey());
+        }
+    }
+
+    @Test
+    void InOrderBasic() {
+        BST<Integer> wideAllNodesTree = new BST<>(null);
+
+        wideAllNodesTree.AddKeyValue(1, 71);
+        wideAllNodesTree.AddKeyValue(2, 71);
+        wideAllNodesTree.AddKeyValue(3, 71);
+        wideAllNodesTree.AddKeyValue(4, 71);
+        wideAllNodesTree.AddKeyValue(5, 71);
+        wideAllNodesTree.AddKeyValue(6, 71);
+        wideAllNodesTree.AddKeyValue(7, 71);
+
+        int[] testSeries = {4, 2, 5, 1, 6, 3, 7};
+
+        ArrayList<BSTNode> result = wideAllNodesTree.DeepAllNodes(1);
+
+        for (int i = 0; i < testSeries.length; i++) {
+            Assertions.assertTrue(testSeries[i] == result.get(i).getKey());
+        }
+    }
+
+    @Test
+    void PostOrderBasic() {
+        BST<Integer> wideAllNodesTree = new BST<>(null);
+
+        wideAllNodesTree.AddKeyValue(1, 71);
+        wideAllNodesTree.AddKeyValue(2, 71);
+        wideAllNodesTree.AddKeyValue(3, 71);
+        wideAllNodesTree.AddKeyValue(4, 71);
+        wideAllNodesTree.AddKeyValue(5, 71);
+        wideAllNodesTree.AddKeyValue(6, 71);
+        wideAllNodesTree.AddKeyValue(7, 71);
+
+        int[] testSeries = {4, 5, 2, 6, 7, 3, 1};
+
+        ArrayList<BSTNode> result = wideAllNodesTree.DeepAllNodes(2);
+
+        for (int i = 0; i < testSeries.length; i++) {
+            Assertions.assertTrue(testSeries[i] == result.get(i).getKey());
+        }
+    }
+
 }

@@ -162,6 +162,41 @@ class SimpleTree<T>
                 assignLevelsRecursively(currentNode, currentLevel+1);
             }
         }
+
+        public ArrayList<T> EvenTrees() {
+            ArrayList<T> nodes = new ArrayList<>();
+            if (Root != null && Count() % 2 == 0) {
+                getRedundantNodes(Root, nodes);
+            }
+            return nodes;
+        }
+
+        private void getRedundantNodes(SimpleTreeNode<T> root, List<T> nodes) {
+            if (root.Children == null) return;
+            for (SimpleTreeNode<T> child : root.Children) {
+                getRedundantEdge(child, nodes);
+                getRedundantNodes(child, nodes);
+            }
+        }
+
+        private void getRedundantEdge(SimpleTreeNode<T> child, List<T> nodeCouples) {
+            if (countChildren(child) % 2 == 0) {
+                nodeCouples.add(child.Parent.NodeValue);
+                nodeCouples.add(child.NodeValue);
+            }
+        }
+
+        private int countChildren(SimpleTreeNode<T> root) {
+            int result = 1;
+            if(root.Children == null) {
+                return result;
+            }
+
+            for (SimpleTreeNode<T> child : root.Children) {
+                result += countChildren(child);
+            }
+            return result;
+        }
 }
 
 

@@ -10,23 +10,6 @@ class Vertex
         Value = val;
         Hit = false;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        boolean isSameObject = obj == this;
-        if (isSameObject) {
-            return true;
-        }
-
-        boolean isAnotherClassObject = !(obj instanceof Vertex);
-        if (isAnotherClassObject) {
-            return false;
-        }
-        Vertex bstNodeForCheck = (Vertex) obj;
-        boolean isEqualValue = this.Value == bstNodeForCheck.Value;
-
-        return isEqualValue;
-    }
 }
 
 class SimpleGraph
@@ -114,6 +97,7 @@ class SimpleGraph
         clearPath();
         ArrayList<Integer> stack = new ArrayList<>();
         stack = findPath(VFrom, VTo, stack);
+        
         return indicesToVertices(stack);
     }
 
@@ -129,18 +113,17 @@ class SimpleGraph
 
         hitVertex(parentIndex);
         stack.add(parentIndex);
+        
         return probeNextBranch(parentIndex, searchedVertexIndex, stack);
     }
 
 
     public void hitVertex(int indexOfVertex) {
-        Vertex vertexObject = vertex[indexOfVertex];
-        vertexObject.Hit = true;
+        vertex[indexOfVertex].Hit = true;
     }
 
 
-    public ArrayList<Integer> probeNextBranch(int parentIndex,
-                                              int searchedVertexIndex, ArrayList<Integer> stack) {
+    public ArrayList<Integer> probeNextBranch(int parentIndex, int searchedVertexIndex, ArrayList<Integer> stack) {
 
         if (resultIsFound(parentIndex, searchedVertexIndex)) {
             stack.add(searchedVertexIndex);
@@ -199,7 +182,6 @@ class SimpleGraph
     }
 
 
-
     public ArrayList<Vertex> indicesToVertices(ArrayList<Integer> stack) {
         ArrayList<Vertex> resultingVertices = new ArrayList<>();
 
@@ -207,8 +189,6 @@ class SimpleGraph
 
         return resultingVertices;
     }
-
-
 }
 
 

@@ -17,6 +17,7 @@ class BSTNode
     }
 }
 
+
 class BalancedBST
 {
     public BSTNode Root;
@@ -39,7 +40,8 @@ class BalancedBST
         recurOverArray(sortedArray, 0, arraySize - 1, null, 0);
 
     }
-   
+
+    
     
 
     public BSTNode recurOverArray(int[] sortedArray, int sortedSubarrayStart, int sortedSubarrayEnd, BSTNode parent, int nodeLevel) {

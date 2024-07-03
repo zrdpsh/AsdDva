@@ -9,7 +9,6 @@ class Vertex
     }
 }
 
-
 class SimpleGraph
 {
     Vertex [] vertex;

@@ -4,11 +4,13 @@ class Vertex
 {
     public int Value;
     public boolean Hit;
+    public int DepthLevel;
 
     public Vertex(int val)
     {
         Value = val;
         Hit = false;
+        DepthLevel = 0;
     }
 
     @Override
@@ -34,6 +36,7 @@ class SimpleGraph
     Vertex [] vertex;
     int [][] m_adjacency;
     int max_vertex;
+    ArrayList<Integer> pathToTarget;
 
 
     public SimpleGraph(int size)
@@ -117,30 +120,105 @@ class SimpleGraph
         return indicesToVertices(stack);
     }
 
+    public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo)
+    {
+        if (!isValidIndex(VFrom) || !isValidIndex(VTo)) {
+            return new ArrayList<>();
+        }
+
+        clearPath();
+
+        pathToTarget.add(VFrom);
+        markAsVisited(VFrom);
+        if (VFrom == VTo) return indicesToVertices(pathToTarget);
+
+        Queue<Integer> path = new LinkedList<>();
+        createPath(VFrom, VTo, path);
+        return indicesToVertices(pathToTarget);
+    }
 
     public void clearPath() {
         for (int vertexIndex = 0; vertexIndex < max_vertex; vertexIndex++) {
-            if (vertex[vertexIndex] != null) vertex[vertexIndex].Hit = false;
+            if (vertex[vertexIndex] != null) {
+                vertex[vertexIndex].Hit = false;
+                vertex[vertexIndex].DepthLevel = 0;
+            }
         }
+        pathToTarget = new ArrayList<>();
     }
 
+    public ArrayList<Integer> findPath(int parentIndex,
+                                       int searchedVertexIndex,
+                                       ArrayList<Integer> stack) {
 
-    public ArrayList<Integer> findPath(int parentIndex, int searchedVertexIndex, ArrayList<Integer> stack) {
-
-        hitVertex(parentIndex);
+        markAsVisited(parentIndex);
         stack.add(parentIndex);
         return probeNextBranch(parentIndex, searchedVertexIndex, stack);
     }
 
+    public Queue<Integer> createPath (int currentIndex,
+                                      int targetIndex,
+                                      Queue<Integer> path) {
 
-    public void hitVertex(int indexOfVertex) {
-        Vertex vertexObject = vertex[indexOfVertex];
-        vertexObject.Hit = true;
+        int nextVertex = getNextFreeNeighbour(currentIndex);
+
+        if (nextVertex != -1) return addNeighbourToQueue(currentIndex, targetIndex, nextVertex, path);
+
+        boolean thereIsQueue = path.size() > 0;
+        if (thereIsQueue) {
+            int nextIndex = path.poll();
+            addVertexToPath(nextIndex);
+            return createPath(nextIndex, targetIndex, path);
+        }
+
+        clearPath();
+        return path;
+
+    }
+
+    public Queue<Integer> addNeighbourToQueue(int currentIndex,
+                                              int targetIndex,
+                                              int nextVertexIndex,
+                                              Queue<Integer> path) {
+        markAsVisited(nextVertexIndex);
+
+        Vertex currentVertex = vertex[currentIndex];
+        Vertex nextVertex = vertex[nextVertexIndex];
+        nextVertex.DepthLevel = currentVertex.DepthLevel + 1;
+
+        path.add(nextVertexIndex);
+
+        if (nextVertexIndex == targetIndex) {
+            pathToTarget.add(targetIndex);
+            return path;
+        }
+
+        return createPath(currentIndex, targetIndex, path);
+    }
+
+    public void addVertexToPath(int index) {
+        int lastIndexInPath = pathToTarget.get(pathToTarget.size() - 1);
+        Vertex lastVertexInPath = vertex[lastIndexInPath];
+        Vertex candidateVertex = vertex[index];
+        
+        if (lastVertexInPath.DepthLevel < candidateVertex.DepthLevel) {
+            pathToTarget.add(index);
+            return;
+        }
+
+        pathToTarget.remove(pathToTarget.size() - 1);
+        pathToTarget.add(index);
+    }
+
+
+    public void markAsVisited(int indexOfVertex) {
+        vertex[indexOfVertex].Hit = true;
     }
 
 
     public ArrayList<Integer> probeNextBranch(int parentIndex,
-                                              int searchedVertexIndex, ArrayList<Integer> stack) {
+                                              int searchedVertexIndex,
+                                              ArrayList<Integer> stack) {
 
         if (resultIsFound(parentIndex, searchedVertexIndex)) {
             stack.add(searchedVertexIndex);
@@ -155,7 +233,8 @@ class SimpleGraph
     }
 
 
-    public boolean resultIsFound(int vertexIndex, int searchedVertexIndex) {
+    public boolean resultIsFound(int vertexIndex,
+                                 int searchedVertexIndex) {
 
         boolean result = false;
 
@@ -180,7 +259,9 @@ class SimpleGraph
     }
 
 
-    public ArrayList<Integer> stepBack(int parentIndex, int searchedVertexIndex, ArrayList<Integer> stack) {
+    public ArrayList<Integer> stepBack(int parentIndex,
+                                       int searchedVertexIndex,
+                                       ArrayList<Integer> stack) {
         stack = removeLastFromStack(stack);
 
         if (stack.size() == 0) {
@@ -188,7 +269,6 @@ class SimpleGraph
         }
 
         int newStartIndex = stack.getLast();
-//        vertex[newStartIndex].Hit = true;
         return probeNextBranch(newStartIndex, searchedVertexIndex, stack);
     }
 
@@ -207,8 +287,6 @@ class SimpleGraph
 
         return resultingVertices;
     }
-
-
 }
 
 

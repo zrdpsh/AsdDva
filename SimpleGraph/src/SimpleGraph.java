@@ -12,6 +12,7 @@ class Vertex
         Hit = false;
         DepthLevel = 0;
     }
+    
 
     @Override
     public boolean equals(Object obj) {

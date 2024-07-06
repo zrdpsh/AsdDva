@@ -47,7 +47,6 @@ class SimpleGraph
         vertex = new Vertex[size];
     }
 
-
     public void AddVertex(int value)
     {
         Vertex newVertex = new Vertex(value);

@@ -37,6 +37,7 @@ class SimpleGraph
     int [][] m_adjacency;
     int max_vertex;
     ArrayList<Integer> pathToTarget;
+    int howMuchVerticesAdded;
 
 
     public SimpleGraph(int size)
@@ -44,6 +45,7 @@ class SimpleGraph
         max_vertex = size;
         m_adjacency = new int [size][size];
         vertex = new Vertex[size];
+        howMuchVerticesAdded = 0;
     }
 
 
@@ -54,6 +56,7 @@ class SimpleGraph
         for (int i = 0; i < max_vertex; i++) {
             if (vertex[i] == null) {
                 vertex[i] = newVertex;
+                howMuchVerticesAdded++;
                 return;
             }
         }
@@ -65,6 +68,7 @@ class SimpleGraph
         if (isValidIndex(v)) {
             vertex[v] = null;
             removeEdges(v);
+            howMuchVerticesAdded--;
         }
 
     }
@@ -108,6 +112,61 @@ class SimpleGraph
         for (int i = 0; i < max_vertex; i++) RemoveEdge(vertixIndex, i);
     }
 
+    public ArrayList<Vertex> WeakVertices()
+    {
+        ArrayList<Integer> weakVerticesIndices = new ArrayList<>();
+        int lastVertexIndex = howMuchVerticesAdded;
+
+        for (int i = 0; i < lastVertexIndex; i++) {
+            collectWeaks(i, weakVerticesIndices);
+        }
+
+        return indicesToVertices(weakVerticesIndices);
+    }
+
+    public int howMuchVerticesAdded() {
+        int result = 0;
+
+        for (int i = 0; i < max_vertex; i++) {
+            if (vertex[i] == null) return i;
+        }
+
+        return result;
+    }
+
+    public void collectWeaks(int vertexIndex, ArrayList<Integer> weakVertices) {
+        boolean isThereTriNeighbours = getTriangleNeighbours(vertexIndex);
+
+        if (isThereTriNeighbours) return;
+
+        if (weakVertices.indexOf(vertexIndex)==-1) weakVertices.add(vertexIndex);
+    }
+
+    public boolean getTriangleNeighbours(int vertexIndex) {
+        ArrayList<Integer>  neighbourIndices = collectNeighbours(vertexIndex);
+        List<Integer> triangleNeighbourList = new ArrayList<>();
+
+        for (int outer = 0; outer < neighbourIndices.size(); outer++) {
+            for (int inner = outer+1; inner < neighbourIndices.size(); inner++) {
+                if (IsEdge(neighbourIndices.get(outer), neighbourIndices.get(inner))) return true;
+            }
+        }
+
+        return false;
+    }
+
+    public ArrayList<Integer> collectNeighbours(int vertexIndex) {
+        ArrayList<Integer> neighbourIndices = new ArrayList<>();
+
+        int nextFreeNeighbour = getNextFreeNeighbour(vertexIndex);
+        for(;nextFreeNeighbour != -1;) {
+            markAsVisited(nextFreeNeighbour);
+            neighbourIndices.add(nextFreeNeighbour);
+            nextFreeNeighbour = getNextFreeNeighbour(vertexIndex);
+        }
+        clearPath();
+        return neighbourIndices;
+    }
 
     public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo) {
         if (!isValidIndex(VFrom) || !isValidIndex(VTo)) {

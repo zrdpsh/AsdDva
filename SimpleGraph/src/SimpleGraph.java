@@ -125,6 +125,8 @@ class SimpleGraph
         return indicesToVertices(weakVerticesIndices);
     }
 
+
+    
     public int howMuchVerticesAdded() {
         int result = 0;
 
@@ -135,6 +137,8 @@ class SimpleGraph
         return result;
     }
 
+
+    
     public void collectWeaks(int vertexIndex, ArrayList<Integer> weakVertices) {
         boolean isThereTriNeighbours = getTriangleNeighbours(vertexIndex);
 
@@ -156,6 +160,8 @@ class SimpleGraph
         return false;
     }
 
+
+    
     public ArrayList<Integer> collectNeighbours(int vertexIndex) {
         ArrayList<Integer> neighbourIndices = new ArrayList<>();
 
@@ -169,6 +175,8 @@ class SimpleGraph
         return neighbourIndices;
     }
 
+
+    
     public ArrayList<Vertex> DepthFirstSearch(int VFrom, int VTo) {
         if (!isValidIndex(VFrom) || !isValidIndex(VTo)) {
             return new ArrayList<>();
@@ -181,6 +189,7 @@ class SimpleGraph
     }
 
 
+    
     public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo)
     {
         if (!isValidIndex(VFrom) || !isValidIndex(VTo)) {
@@ -199,6 +208,7 @@ class SimpleGraph
     }
 
 
+    
     public void clearPath() {
         for (int vertexIndex = 0; vertexIndex < max_vertex; vertexIndex++) {
             if (vertex[vertexIndex] != null) {
@@ -210,6 +220,7 @@ class SimpleGraph
     }
 
 
+    
     public ArrayList<Integer> findPath(int parentIndex,
                                        int searchedVertexIndex,
                                        ArrayList<Integer> stack) {
@@ -220,6 +231,7 @@ class SimpleGraph
     }
 
 
+    
     public Queue<Integer> createPath (int currentIndex,
                                       int targetIndex,
                                       Queue<Integer> path) {
@@ -241,6 +253,7 @@ class SimpleGraph
     }
 
 
+    
     public Queue<Integer> addNeighbourToQueue(int currentIndex,
                                               int targetIndex,
                                               int nextVertexIndex,
@@ -262,6 +275,7 @@ class SimpleGraph
     }
 
 
+    
     public void addVertexToPath(int index) {
         int lastIndexInPath = pathToTarget.get(pathToTarget.size() - 1);
         Vertex lastVertexInPath = vertex[lastIndexInPath];
@@ -277,11 +291,13 @@ class SimpleGraph
     }
 
 
+    
     public void markAsVisited(int indexOfVertex) {
         vertex[indexOfVertex].Hit = true;
     }
 
 
+    
     public ArrayList<Integer> probeNextBranch(int parentIndex,
                                               int searchedVertexIndex,
                                               ArrayList<Integer> stack) {
@@ -299,6 +315,7 @@ class SimpleGraph
     }
 
 
+    
     public boolean resultIsFound(int vertexIndex,
                                  int searchedVertexIndex) {
 
@@ -313,6 +330,7 @@ class SimpleGraph
     }
 
 
+    
     public int getNextFreeNeighbour(int vertexIndex) {
 
         int result = -1;
@@ -325,6 +343,7 @@ class SimpleGraph
     }
 
 
+    
     public ArrayList<Integer> stepBack(int parentIndex,
                                        int searchedVertexIndex,
                                        ArrayList<Integer> stack) {
@@ -339,13 +358,14 @@ class SimpleGraph
     }
 
 
+    
     private ArrayList<Integer> removeLastFromStack(ArrayList<Integer> stack) {
         if (stack.size() > 0) stack.remove(stack.size() - 1);
         return stack;
     }
 
 
-
+    
     public ArrayList<Vertex> indicesToVertices(ArrayList<Integer> stack) {
         ArrayList<Vertex> resultingVertices = new ArrayList<>();
 

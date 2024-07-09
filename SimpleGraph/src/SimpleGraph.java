@@ -113,6 +113,8 @@ class SimpleGraph
         for (int i = 0; i < max_vertex; i++) RemoveEdge(vertixIndex, i);
     }
 
+
+    
     public ArrayList<Vertex> WeakVertices()
     {
         ArrayList<Integer> weakVerticesIndices = new ArrayList<>();

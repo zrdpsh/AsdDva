@@ -149,6 +149,8 @@ class SimpleGraph
         if (weakVertices.indexOf(vertexIndex)==-1) weakVertices.add(vertexIndex);
     }
 
+
+    
     public boolean getTriangleNeighbours(int vertexIndex) {
         ArrayList<Integer>  neighbourIndices = collectNeighbours(vertexIndex);
         List<Integer> triangleNeighbourList = new ArrayList<>();

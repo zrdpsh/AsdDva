@@ -12,6 +12,7 @@ class Vertex
         Hit = false;
         DepthLevel = 0;
     }
+    
 
     @Override
     public boolean equals(Object obj) {
@@ -31,6 +32,7 @@ class Vertex
     }
 }
 
+
 class SimpleGraph
 {
     Vertex [] vertex;
@@ -47,7 +49,6 @@ class SimpleGraph
         vertex = new Vertex[size];
         howMuchVerticesAdded = 0;
     }
-
 
     public void AddVertex(int value)
     {
@@ -179,6 +180,7 @@ class SimpleGraph
         return indicesToVertices(stack);
     }
 
+
     public ArrayList<Vertex> BreadthFirstSearch(int VFrom, int VTo)
     {
         if (!isValidIndex(VFrom) || !isValidIndex(VTo)) {
@@ -196,6 +198,7 @@ class SimpleGraph
         return indicesToVertices(pathToTarget);
     }
 
+
     public void clearPath() {
         for (int vertexIndex = 0; vertexIndex < max_vertex; vertexIndex++) {
             if (vertex[vertexIndex] != null) {
@@ -206,6 +209,7 @@ class SimpleGraph
         pathToTarget = new ArrayList<>();
     }
 
+
     public ArrayList<Integer> findPath(int parentIndex,
                                        int searchedVertexIndex,
                                        ArrayList<Integer> stack) {
@@ -214,6 +218,7 @@ class SimpleGraph
         stack.add(parentIndex);
         return probeNextBranch(parentIndex, searchedVertexIndex, stack);
     }
+
 
     public Queue<Integer> createPath (int currentIndex,
                                       int targetIndex,
@@ -235,6 +240,7 @@ class SimpleGraph
 
     }
 
+
     public Queue<Integer> addNeighbourToQueue(int currentIndex,
                                               int targetIndex,
                                               int nextVertexIndex,
@@ -254,6 +260,7 @@ class SimpleGraph
 
         return createPath(currentIndex, targetIndex, path);
     }
+
 
     public void addVertexToPath(int index) {
         int lastIndexInPath = pathToTarget.get(pathToTarget.size() - 1);

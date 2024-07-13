@@ -27,7 +27,6 @@ public class AlgorithmsDataStructures2
     }
 
 
-
     public static int[] sortInitialArray(int[] array) {
         Arrays.sort(array);
         return array;

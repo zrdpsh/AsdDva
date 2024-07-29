@@ -9,6 +9,7 @@ class BSTNode
     public BSTNode RightChild; 	
     public int Level; 
 
+    
     public BSTNode(int key, BSTNode parent)
     {
         NodeKey = key;

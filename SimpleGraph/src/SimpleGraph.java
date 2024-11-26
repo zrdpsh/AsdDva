@@ -13,6 +13,7 @@ class Vertex
         DepthLevel = 0;
     }
     
+    
     @Override
     public boolean equals(Object obj) {
         boolean isSameObject = obj == this;

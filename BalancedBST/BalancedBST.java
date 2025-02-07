@@ -19,7 +19,6 @@ class BSTNode
     }
 }
 
-
 class BalancedBST
 {
     public BSTNode Root;

@@ -13,7 +13,6 @@ class Heap
     public Heap() { HeapArray = null; }
 
 
-
     public void MakeHeap(int[] a, int depth)
     {
         if (a == null) return;

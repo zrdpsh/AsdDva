@@ -27,7 +27,6 @@ class Heap
     }
 
 
-
     public int GetMax()
     {
         int result = pullMaxValue();

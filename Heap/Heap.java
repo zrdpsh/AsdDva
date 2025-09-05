@@ -34,7 +34,6 @@ class Heap
         return result;
     }
     
-
     private int pullMaxValue() {
         int maxValue = HeapArray[0];
 

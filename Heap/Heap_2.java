@@ -9,8 +9,6 @@ class Heap
     public int [] HeapArray;
 
     public Heap() { HeapArray = null; }
-
-
     
 }
 
